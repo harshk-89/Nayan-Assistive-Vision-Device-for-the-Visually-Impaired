@@ -1,109 +1,108 @@
-Here is a **well-structured README.md** template based on your requirements, written so you can directly **paste it into your `README.md` file**.
-You can copy-paste this code and it will work seamlessly, **without the project structure** or **"How It Works"** sections.
+# Nayan – Assistive Vision Device for the Visually Impaired
 
----
-
-````markdown
-# Nayan - Assistive Vision Device for the Visually Impaired
-
-**Nayan** is an offline, AI-powered assistive vision system designed for visually impaired users. It integrates voice feedback, object detection, face recognition, and image-to-text capabilities into a single device.
+**Nayan** is an offline, AI-powered assistive vision system designed to help visually impaired users navigate their environment. By combining voice feedback, object detection, face recognition, and image-to-text capabilities, Nayan provides real-time audio descriptions without requiring an internet connection.
 
 ---
 
 ## 🔧 Modules
 
-### 🔊 Voice Module (`pyttsx3`)
-This module converts text into speech using `pyttsx3`. We use this library because it works offline, which ensures the device functions even in environments without internet connectivity. It helps the user understand situations via real-time audio feedback.
+- **Voice Module (`pyttsx3`)**  
+  Converts text into speech so that all detected information can be communicated audibly to the user.
 
----
+- **Image-to-Text Module (`EasyOCR`)**  
+  Extracts text from images (e.g., signs, documents) and passes it to the Voice Module for audio playback.
 
-### 🖼️ Image-to-Text Module (`EasyOCR`)
-This module extracts text from images using `EasyOCR`, a robust and deep learning-based OCR system. The extracted text is then passed to the Voice Module for audio playback to the user.
+- **Face Detection & Recognition Module (`face_recognition`, `dlib`, `opencv-python`)**  
+  Detects faces in the camera feed, compares them against a known-face database, and announces recognized names (or indicates “Unknown Face”).
 
----
-
-### 👤 Face Detection Module (`face_recognition`, `dlib`, `cv2`)
-This module performs face detection and recognition using a known dataset of face images. It encodes all faces during initialization. During operation:
-- It matches captured faces with known encodings.
-- If a match is found with high confidence, it announces the name.
-- If no confident match is found, it informs that the face is unknown.
-
-**Core logic:**
-```python
-# Refer to face_recognition.py in module3
-# Recognizes faces and uses pyttsx3 for voice feedback
-````
-
----
-
-### 🧠 Object Detection Module (`YOLOv8`)
-
-This module uses YOLOv8 (`ultralytics`) for live object detection. Key features:
-
-* Detects objects in real-time.
-* Annotates images with object names and distance labels (close/far).
-* Saves annotated images for review.
-
-**Sample Code Snippet:**
-
-```python
-# Refer to yolov8_detect.py in module4
-# Detects and counts objects, saves annotated images
-```
+- **Object Detection Module (`YOLOv8` via `ultralytics`)**  
+  Performs real-time object detection, annotates each detected object with a bounding box and label, and provides spoken descriptions or distance estimates (e.g., “chair detected,” “person far away”).
 
 ---
 
 ## 🛠️ Installation
 
-```bash
-# Clone the repository (replace YOUR-GITHUB-USERNAME with your GitHub username)
-git clone https://github.com/YOUR-GITHUB-USERNAME/Nayan-Assistive-Vision-Device-for-the-Visually-Impaired.git
-cd Nayan-Assistive-Vision-Device-for-the-Visually-Impaired
+1. **fork & Clone the repository**  
+   Replace `YOUR-GITHUB-USERNAME` with your GitHub username:
+   ```bash
+   git clone https://github.com/YOUR-GITHUB-USERNAME/Nayan-Assistive-Vision-Device-for-the-Visually-Impaired.git
+   cd Nayan-Assistive-Vision-Device-for-the-Visually-Impaired
 
-# Create a virtual environment
-python3.10 -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+2. **Create and activate a virtual environment**
 
-# Upgrade pip and install requirements
-pip install --upgrade pip
-pip install -r requirements.txt
+   ```bash
+   python3.10 -m venv venv
+   source venv/bin/activate    # On Windows: venv\Scripts\activate
+   ```
 
-# If dlib fails to install, use the precompiled wheel provided in the repo:
-pip install dlib‑19.24.0‑cp310‑cp310‑win_amd64.whl
-```
+3. **Install dependencies**
+
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+4. **(Optional) If `dlib` fails to build from source**
+   Install the provided precompiled wheel:
+
+   ```bash
+   pip install dlib-19.24.0-cp310-cp310-win_amd64.whl
+   ```
 
 ---
 
-## 🚀 Run the Application
+## 🚀 Usage
 
-```bash
-python main.py
-```
+1. **Prepare your known faces folder**
+
+   * Add clear, frontal images of people you want the system to recognize.
+   * Ensure each image filename reflects the person’s name (e.g., `alice.jpg`, `bob.png`).
+
+2. **Adjust configuration (if needed)**
+
+   * In `config.py` (or whichever config file), set any paths or thresholds:
+
+     * Path to known-face directory
+     * Confidence thresholds for face recognition
+     * YOLOv8 model path (e.g., `yolov8m.pt`)
+     * OCR language preferences
+
+3. **Run the main application**
+
+   ```bash
+   python main.py
+   ```
+
+   * The system will initialize all modules in sequence.
+   * You will hear spoken prompts and continuous audio descriptions as the camera feed is processed.
+
+4. **Stopping the application**
+
+   * Press `Ctrl+C` (or close the terminal) to stop the program and release the camera device.
 
 ---
 
 ## 🤝 Contributing
 
-We welcome open-source contributions!
+We welcome contributions! To help improve Nayan:
 
-1. Fork the repository.
-2. Clone it using:
+1. **Fork** this repository.
+2. **Clone** your fork:
 
    ```bash
    git clone https://github.com/YOUR-GITHUB-USERNAME/Nayan-Assistive-Vision-Device-for-the-Visually-Impaired.git
    ```
-3. Create a new branch, make your changes, and open a pull request.
+3. Create a new branch for your feature or bug fix:
 
----
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+4. Make your changes, commit, and push:
 
-## 📃 License
+   ```bash
+   git add .
+   git commit -m "Describe your changes"
+   git push origin feature/your-feature-name
+   ```
+5. Open a **Pull Request** on the main repository. We’ll review and merge if everything looks good!
 
-This project is open-source and available under the [MIT License](LICENSE).
-
-```
-
----
-
-Just **replace `YOUR-GITHUB-USERNAME`** with your GitHub profile name when using it.  
-Let me know if you also want a `requirements.txt` sample or help splitting this README into sections in a Python docstring style.
-```
